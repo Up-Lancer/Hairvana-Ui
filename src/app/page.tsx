@@ -50,6 +50,7 @@ import {
   Smile,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useDropzone } from 'react-dropzone';
 
 // Utility function for cn
 function cnUtil(...classes: (string | undefined | null | false)[]): string {
@@ -577,6 +578,9 @@ export function HairvanaInterface() {
       image: "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400&h=600&fit=crop"
     },
   ]);
+  // Booking Rating Modal state
+  const [showRatingModal, setShowRatingModal] = useState(false);
+  const [lastBookingInfo, setLastBookingInfo] = useState({ salon: '', stylist: '', style: '' });
 
   const shouldReduceMotion = useReducedMotion();
   const { textareaRef, adjustHeight } = useAutoResizeTextarea({
@@ -1035,6 +1039,13 @@ export function HairvanaInterface() {
     setTimeout(() => {
       setShowBookingConfirmation(false);
       setActiveView('home');
+      // Show rating modal after booking confirmation
+      setLastBookingInfo({
+        salon: selectedSalon?.name || '',
+        stylist: selectedAppointmentStylist?.name || '',
+        style: selectedAppointmentStyle?.name || '',
+      });
+      setShowRatingModal(true);
     }, 3000);
   };
 
@@ -3271,6 +3282,181 @@ export function HairvanaInterface() {
 
   const isFullScreenView = ['ar', 'evaluation', 'bookAppointment'].includes(activeView);
 
+  // --- Booking Rating Modal ---
+  interface BookingRatingModalProps {
+    open: boolean;
+    onClose: () => void;
+    onSubmit: (data: { rating: number; review: string; tags: string[] }) => void;
+    salonName?: string;
+    stylistName?: string;
+    styleName?: string;
+  }
+
+  function BookingRatingModal({
+    open,
+    onClose,
+    onSubmit,
+    salonName,
+    stylistName,
+    styleName,
+  }: BookingRatingModalProps) {
+    const [rating, setRating] = useState(0);
+    const [hoverRating, setHoverRating] = useState(0);
+    const [review, setReview] = useState('');
+    const [selectedTags, setSelectedTags] = useState<string[]>([]);
+    const [submitted, setSubmitted] = useState(false);
+
+    const quickTags = [
+      'Great Service',
+      'Loved the Style',
+      'Clean & Professional',
+      'Could Improve',
+    ];
+
+    const handleTagToggle = (tag: string) => {
+      setSelectedTags((prev) =>
+        prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+      );
+    };
+
+    const handleSubmit = () => {
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        onSubmit({ rating, review, tags: selectedTags });
+        onClose();
+        // Reset state
+        setRating(0); setReview(''); setSelectedTags([]);
+      }, 1800);
+    };
+
+    if (!open) return null;
+
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+        style={{ backdropFilter: 'blur(2px)' }}
+      >
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.95, opacity: 0 }}
+          className="bg-white rounded-2xl shadow-2xl p-6 max-w-md w-full relative flex flex-col items-center"
+        >
+          {submitted ? (
+            <div className="flex flex-col items-center justify-center py-12">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                <Check className="w-8 h-8 text-green-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Thank you!</h3>
+              <p className="text-gray-600">Your feedback helps us improve our service.</p>
+            </div>
+          ) : (
+            <>
+              <button
+                className="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
+                onClick={onClose}
+                aria-label="Close rating modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              <div className="mb-4 text-center">
+                <h3 className="text-2xl font-bold text-purple-700 mb-1">Rate Your Experience</h3>
+                <p className="text-gray-600 text-sm">
+                  {salonName && <span>at <span className="font-semibold">{salonName}</span></span>}
+                  {stylistName && <span> with <span className="font-semibold">{stylistName}</span></span>}
+                  {styleName && <span> for <span className="font-semibold">{styleName}</span></span>}
+                </p>
+              </div>
+              {/* Star Rating */}
+              <div className="flex items-center justify-center gap-1 mb-4">
+                {[1,2,3,4,5].map((star) => (
+                  <button
+                    key={star}
+                    type="button"
+                    onMouseEnter={() => setHoverRating(star)}
+                    onMouseLeave={() => setHoverRating(0)}
+                    onClick={() => setRating(star)}
+                    className="focus:outline-none"
+                  >
+                    <Star
+                      className={cnFallback(
+                        'w-8 h-8 transition-colors',
+                        (hoverRating || rating) >= star ? 'text-yellow-400 fill-current' : 'text-gray-300'
+                      )}
+                    />
+                  </button>
+                ))}
+              </div>
+              {/* Quick Tags */}
+              <div className="flex flex-wrap gap-2 mb-4 justify-center">
+                {quickTags.map((tag) => (
+                  <button
+                    key={tag}
+                    type="button"
+                    onClick={() => handleTagToggle(tag)}
+                    className={cnFallback(
+                      'px-3 py-1 rounded-full text-sm font-medium border transition-all',
+                      selectedTags.includes(tag)
+                        ? 'bg-purple-100 text-purple-700 border-purple-300 shadow'
+                        : 'bg-gray-100 text-gray-500 border-gray-200'
+                    )}
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
+              {/* Review Textarea */}
+              <Textarea
+                value={review}
+                onChange={(e) => setReview(e.target.value)}
+                placeholder="Leave a note (optional)"
+                className="mb-4"
+                showRing={false}
+              />
+              {/* Submit/Skip Buttons */}
+              <div className="flex gap-3 w-full mt-2">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleSubmit}
+                  disabled={rating === 0}
+                  className={cnFallback(
+                    'flex-1 py-3 rounded-xl font-semibold shadow transition-all',
+                    rating > 0
+                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
+                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  )}
+                >
+                  Submit
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={onClose}
+                  className="flex-1 py-3 rounded-xl font-semibold bg-gray-100 text-gray-600 shadow"
+                >
+                  Skip
+                </motion.button>
+              </div>
+            </>
+          )}
+        </motion.div>
+      </motion.div>
+    );
+  }
+  // --- Booking Rating Modal ---
+
+  // Add handler for rating submit
+  const handleRatingSubmit = (data) => {
+    // You can send data to backend or store locally
+    // For now, just log it
+    console.log('Rating submitted:', data);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 p-4">
       <div className="max-w-md mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden h-[calc(100vh-32px)] flex flex-col">
@@ -3426,6 +3612,19 @@ export function HairvanaInterface() {
               </div>
             </motion.div>
           </motion.div>
+        )}
+      </AnimatePresence>
+      {/* Booking Rating Modal */}
+      <AnimatePresence>
+        {showRatingModal && (
+          <BookingRatingModal
+            open={showRatingModal}
+            onClose={() => setShowRatingModal(false)}
+            onSubmit={handleRatingSubmit}
+            salonName={lastBookingInfo.salon}
+            stylistName={lastBookingInfo.stylist}
+            styleName={lastBookingInfo.style}
+          />
         )}
       </AnimatePresence>
     </div>
