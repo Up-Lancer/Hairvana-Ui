@@ -487,6 +487,242 @@ interface HistoryItem {
   image: string;
 }
 
+// --- Localization (i18n) ---
+const translations = {
+  en: {
+    // General
+    appName: 'Hairvana',
+    personalStyleCompanion: 'Your personal style companion',
+    // Navigation
+    nav: {
+      home: 'Home',
+      ar: 'AR',
+      gallery: 'Gallery',
+      salons: 'Salons',
+      coach: 'Coach',
+      profile: 'Profile',
+      favorites: 'Favorites',
+      settings: 'Settings',
+      booking: 'Booking',
+      history: 'History',
+    },
+    // Views
+    view: {
+      home: 'Hairvana',
+      ar: 'AR Try-On',
+      gallery: 'Style Gallery',
+      booking: 'Book a Stylist',
+      profile: 'My Profile',
+      chat: 'AI Style Coach',
+      evaluation: 'AI Evaluation',
+      bookAppointment: 'Book Appointment',
+      payment: 'Payment',
+      favorites: 'My Favorites',
+      salons: 'Find Salons',
+      paymentDetails: 'Payment Details',
+      history: 'My History',
+      salonDetails: 'Salon Details',
+      styleDetails: 'Style Details',
+      settings: 'Settings',
+      bookingHistory: 'Booking History',
+    },
+    // Onboarding
+    onboarding: [
+      {
+        title: 'Welcome to Hairvana!',
+        description: 'See how new hairstyles look on you, instantly and confidently — with AR and AI magic.',
+      },
+      {
+        title: 'Try Before You Cut',
+        description: 'Use your camera to preview hundreds of hairstyles in real-time AR.',
+      },
+      {
+        title: 'AI-Powered Suggestions',
+        description: 'Our AI evaluates your chosen style, face shape, and tone to guide you to your best look.',
+      },
+      {
+        title: 'Save & Share Styles',
+        description: 'Save your looks, rate them, and ask friends to vote on what suits you best — all in one tap!',
+      },
+      {
+        title: 'Book Instantly',
+        description: 'Like what you see? Book a matching salon nearby with available slots. Smooth and fast.',
+      },
+      {
+        title: 'Style Coach AI',
+        description: 'Unsure what fits your face? Ask our chatbot for suggestions, trends, and expert advice.',
+      },
+    ],
+    // ... (add all other keys for buttons, labels, placeholders, quick filters, actions, modals, etc.)
+    // Settings, Profile, etc. (existing keys)
+    settings: 'Settings',
+    profile: 'Profile',
+    editProfile: 'Edit Profile',
+    faceShape: 'Face Shape',
+    preferences: 'Preferences',
+    notifications: 'Notifications',
+    theme: 'Theme',
+    language: 'Language',
+    support: 'Support',
+    helpCenter: 'Help Center',
+    contactSupport: 'Contact Support',
+    privacyPolicy: 'Privacy Policy',
+    logout: 'Logout',
+    appSettings: 'App Settings',
+    light: 'Light',
+    dark: 'Dark',
+    system: 'System',
+    english: 'English',
+    arabic: 'Arabic',
+    // ...
+  },
+  ar: {
+    // General
+    appName: 'هيرفانا',
+    personalStyleCompanion: 'رفيقك الشخصي للأناقة',
+    // Navigation
+    nav: {
+      home: 'الرئيسية',
+      ar: 'الواقع المعزز',
+      gallery: 'المعرض',
+      salons: 'الصالونات',
+      coach: 'المدرب',
+      profile: 'الملف',
+      favorites: 'المفضلة',
+      settings: 'الإعدادات',
+      booking: 'الحجوزات',
+      history: 'السجل',
+    },
+    // Views
+    view: {
+      home: 'هيرفانا',
+      ar: 'تجربة الواقع المعزز',
+      gallery: 'معرض التسريحات',
+      booking: 'حجز مصفف',
+      profile: 'ملفي الشخصي',
+      chat: 'مدرب الذكاء الاصطناعي',
+      evaluation: 'تقييم الذكاء الاصطناعي',
+      bookAppointment: 'حجز موعد',
+      payment: 'الدفع',
+      favorites: 'المفضلة',
+      salons: 'البحث عن صالونات',
+      paymentDetails: 'تفاصيل الدفع',
+      history: 'سجلي',
+      salonDetails: 'تفاصيل الصالون',
+      styleDetails: 'تفاصيل التسريحة',
+      settings: 'الإعدادات',
+      bookingHistory: 'سجل الحجوزات',
+    },
+    // Onboarding
+    onboarding: [
+      {
+        title: 'مرحبًا بك في هيرفانا!',
+        description: 'شاهد كيف تبدو التسريحات الجديدة عليك فورًا وبثقة — مع سحر الواقع المعزز والذكاء الاصطناعي.',
+      },
+      {
+        title: 'جرب قبل أن تقص',
+        description: 'استخدم الكاميرا لمعاينة مئات التسريحات في الواقع المعزز مباشرة.',
+      },
+      {
+        title: 'اقتراحات مدعومة بالذكاء الاصطناعي',
+        description: 'يقيم الذكاء الاصطناعي أسلوبك المختار وشكل وجهك ولونك ليرشدك لأفضل مظهر.',
+      },
+      {
+        title: 'احفظ وشارك التسريحات',
+        description: 'احفظ إطلالاتك، وقيّمها، واطلب من أصدقائك التصويت على الأنسب لك — بضغطة واحدة!',
+      },
+      {
+        title: 'احجز فورًا',
+        description: 'أعجبتك الإطلالة؟ احجز صالونًا قريبًا بموعد متاح بسرعة وسلاسة.',
+      },
+      {
+        title: 'مدرب الذكاء الاصطناعي',
+        description: 'لست متأكدًا مما يناسب وجهك؟ اسأل روبوت الدردشة عن الاقتراحات والصيحات والنصائح.',
+      },
+    ],
+    // ... (add all other keys for buttons, labels, placeholders, quick filters, actions, modals, etc.)
+    // Settings, Profile, etc. (existing keys)
+    settings: 'الإعدادات',
+    profile: 'الملف الشخصي',
+    editProfile: 'تعديل الملف',
+    faceShape: 'شكل الوجه',
+    preferences: 'التفضيلات',
+    notifications: 'الإشعارات',
+    theme: 'المظهر',
+    language: 'اللغة',
+    support: 'الدعم',
+    helpCenter: 'مركز المساعدة',
+    contactSupport: 'اتصل بالدعم',
+    privacyPolicy: 'سياسة الخصوصية',
+    logout: 'تسجيل الخروج',
+    appSettings: 'إعدادات التطبيق',
+    light: 'فاتح',
+    dark: 'داكن',
+    system: 'النظام',
+    english: 'الإنجليزية',
+    arabic: 'العربية',
+    // ...
+  },
+};
+// ... existing code ...
+// In HairvanaInterface:
+// 1. Use t('view.'+activeView) for viewTitles
+// 2. Use t('nav.home'), t('nav.ar'), etc. for navigation
+// 3. For onboardingStepsData, use translations[settings.language].onboarding
+// ... existing code ...
+
+function useTranslation(language: 'en' | 'ar') {
+  return useCallback(
+    (key: string) => {
+      const keys = key.split('.');
+      let value: any = translations[language];
+      for (const k of keys) {
+        value = value?.[k];
+        if (value === undefined) break;
+      }
+      return typeof value === 'string' ? value : key;
+    },
+    [language]
+  );
+}
+// --- Localization (i18n) ---
+
+// --- RTL Utility ---
+function useRTL(language: 'en' | 'ar') {
+  useEffect(() => {
+    const html = document.documentElement;
+    html.lang = language;
+    if (language === 'ar') {
+      html.dir = 'rtl';
+    } else {
+      html.dir = 'ltr';
+    }
+  }, [language]);
+}
+// --- RTL Utility ---
+
+// --- Settings Persistence ---
+type Settings = { notifications: boolean; theme: string; language: string };
+
+function usePersistentSettings() {
+  const [settings, setSettings] = useState<Settings>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('hairvana-settings');
+      if (saved) return JSON.parse(saved);
+    }
+    return {
+      notifications: true,
+      theme: 'light',
+      language: 'en',
+    };
+  });
+  useEffect(() => {
+    localStorage.setItem('hairvana-settings', JSON.stringify(settings));
+  }, [settings]);
+  return [settings, setSettings] as [Settings, React.Dispatch<React.SetStateAction<Settings>>];
+}
+// --- Settings Persistence ---
+
 // Main Hairvana Component
 export function HairvanaInterface() {
   const [appState, setAppState] = useState<'splash' | 'auth' | 'onboarding' | 'main'>('splash');
@@ -534,11 +770,7 @@ export function HairvanaInterface() {
       price: "$120.00"
     }
   ]);
-  const [settings, setSettings] = useState({
-    notifications: true,
-    theme: 'light',
-    language: 'English'
-  });
+  const [settings, setSettings] = usePersistentSettings();
   const [selectedAppointmentStyle, setSelectedAppointmentStyle] = useState<HairstyleCard | null>(null);
   const [showBookingConfirmation, setShowBookingConfirmation] = useState(false);
   const [likedStyles, setLikedStyles] = useState<Set<string>>(new Set());
@@ -594,38 +826,20 @@ export function HairvanaInterface() {
     preferences: ['Wavy', 'Long'],
   };
 
-  const onboardingStepsData = [
-    {
-      icon: <Sparkles className="w-16 h-16 text-purple-500" />,
-      title: "Welcome to Hairvana!",
-      description: "See how new hairstyles look on you, instantly and confidently — with AR and AI magic.",
-    },
-    {
-      icon: <Camera className="w-16 h-16 text-pink-500" />,
-      title: "Try Before You Cut",
-      description: "Use your camera to preview hundreds of hairstyles in real-time AR.",
-    },
-    {
-      icon: <Zap className="w-16 h-16 text-blue-500" />,
-      title: "AI-Powered Suggestions",
-      description: "Our AI evaluates your chosen style, face shape, and tone to guide you to your best look.",
-    },
-    {
-      icon: <Vote className="w-16 h-16 text-green-500" />,
-      title: "Save & Share Styles",
-      description: "Save your looks, rate them, and ask friends to vote on what suits you best — all in one tap!",
-    },
-    {
-      icon: <Calendar className="w-16 h-16 text-orange-500" />,
-      title: "Book Instantly",
-      description: "Like what you see? Book a matching salon nearby with available slots. Smooth and fast.",
-    },
-    {
-      icon: <MessageCircle className="w-16 h-16 text-purple-500" />,
-      title: "Style Coach AI",
-      description: "Unsure what fits your face? Ask our chatbot for suggestions, trends, and expert advice.",
-    },
-  ];
+  // Fix onboardingStepsData type
+  const onboardingStepsData: { icon: React.ReactNode; title: string; description: string }[] =
+    (translations as Record<string, any>)[settings.language]?.onboarding.map((step: any, idx: number) => ({
+      icon: [
+        <Sparkles className="w-16 h-16 text-purple-500" key="icon0" />,
+        <Camera className="w-16 h-16 text-pink-500" key="icon1" />,
+        <Zap className="w-16 h-16 text-blue-500" key="icon2" />,
+        <Vote className="w-16 h-16 text-green-500" key="icon3" />,
+        <Calendar className="w-16 h-16 text-orange-500" key="icon4" />,
+        <MessageCircle className="w-16 h-16 text-purple-500" key="icon5" />,
+      ][idx],
+      title: step.title,
+      description: step.description,
+    })) ?? [];
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -1212,7 +1426,7 @@ export function HairvanaInterface() {
             {onboardingStepsData.map((_, index) => (
               <motion.button
                 key={index}
-                onClick={() => setOnboardingStep(index)} // Allow clicking circles to navigate
+                onClick={() => setOnboardingStep(index)}
                 className={cnFallback(
                   "h-2 rounded-full transition-all duration-300",
                   index === onboardingStep ? "w-8 bg-purple-500" : "w-2 bg-gray-300"
@@ -2828,6 +3042,22 @@ export function HairvanaInterface() {
     </motion.div>
   );
 
+  const t = useTranslation(settings.language as 'en' | 'ar');
+  useRTL(settings.language as 'en' | 'ar');
+
+  // Theme effect: apply class to html
+  useEffect(() => {
+    const html = document.documentElement;
+    if (
+      settings.theme === 'dark' ||
+      (settings.theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      html.classList.add('dark');
+    } else {
+      html.classList.remove('dark');
+    }
+  }, [settings.theme]);
+
   const renderSettingsView = () => (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -2836,15 +3066,15 @@ export function HairvanaInterface() {
     >
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Settings</h2>
+        <h2 className="text-2xl font-bold">{t('settings')}</h2>
       </div>
 
       {/* Profile Settings */}
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Profile</h3>
+        <h3 className="text-xl font-semibold">{t('profile')}</h3>
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-gray-700">Edit Profile</span>
+            <span className="text-gray-700">{t('editProfile')}</span>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -2855,7 +3085,7 @@ export function HairvanaInterface() {
             </motion.button>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-gray-700">Face Shape: Oval</span>
+            <span className="text-gray-700">{t('faceShape')}: Oval</span>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -2866,7 +3096,7 @@ export function HairvanaInterface() {
             </motion.button>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-gray-700">Preferences: Wavy, Long</span>
+            <span className="text-gray-700">{t('preferences')}: Wavy, Long</span>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -2881,14 +3111,14 @@ export function HairvanaInterface() {
 
       {/* App Settings */}
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">App Settings</h3>
+        <h3 className="text-xl font-semibold">{t('appSettings')}</h3>
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-gray-700">Notifications</span>
+            <span className="text-gray-700">{t('notifications')}</span>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => setSettings(prev => ({ ...prev, notifications: !prev.notifications }))}
+              onClick={() => setSettings((prev: Settings) => ({ ...prev, notifications: !prev.notifications }))}
               className={cnFallback(
                 "w-12 h-6 rounded-full transition-colors",
                 settings.notifications ? "bg-purple-500" : "bg-gray-300"
@@ -2900,20 +3130,37 @@ export function HairvanaInterface() {
               )} />
             </motion.button>
           </div>
+          {/* Theme Toggle */}
           <div className="flex items-center justify-between">
-            <span className="text-gray-700">Theme</span>
-            <span className="text-purple-600">{settings.theme}</span>
+            <span className="text-gray-700">{t('theme')}</span>
+            <select
+              value={settings.theme}
+              onChange={e => setSettings((prev: Settings) => ({ ...prev, theme: e.target.value }))}
+              className="text-purple-600 bg-gray-100 rounded px-2 py-1"
+            >
+              <option value="light">{t('light')}</option>
+              <option value="dark">{t('dark')}</option>
+              <option value="system">{t('system')}</option>
+            </select>
           </div>
+          {/* Language Toggle */}
           <div className="flex items-center justify-between">
-            <span className="text-gray-700">Language</span>
-            <span className="text-purple-600">{settings.language}</span>
+            <span className="text-gray-700">{t('language')}</span>
+            <select
+              value={settings.language}
+              onChange={e => setSettings((prev: Settings) => ({ ...prev, language: e.target.value }))}
+              className="text-purple-600 bg-gray-100 rounded px-2 py-1"
+            >
+              <option value="en">{t('english')}</option>
+              <option value="ar">{t('arabic')}</option>
+            </select>
           </div>
         </div>
       </div>
 
       {/* Support */}
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Support</h3>
+        <h3 className="text-xl font-semibold">{t('support')}</h3>
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 space-y-4">
           <motion.button
             whileHover={{ scale: 1.01 }}
@@ -2921,7 +3168,7 @@ export function HairvanaInterface() {
             onClick={() => alert('Help center coming soon!')}
             className="w-full flex items-center justify-between text-left"
           >
-            <span className="text-gray-700">Help Center</span>
+            <span className="text-gray-700">{t('helpCenter')}</span>
             <ChevronRight className="w-5 h-5 text-gray-400" />
           </motion.button>
           <motion.button
@@ -2930,7 +3177,7 @@ export function HairvanaInterface() {
             onClick={() => alert('Contact support coming soon!')}
             className="w-full flex items-center justify-between text-left"
           >
-            <span className="text-gray-700">Contact Support</span>
+            <span className="text-gray-700">{t('contactSupport')}</span>
             <ChevronRight className="w-5 h-5 text-gray-400" />
           </motion.button>
           <motion.button
@@ -2939,7 +3186,7 @@ export function HairvanaInterface() {
             onClick={() => alert('Privacy policy coming soon!')}
             className="w-full flex items-center justify-between text-left"
           >
-            <span className="text-gray-700">Privacy Policy</span>
+            <span className="text-gray-700">{t('privacyPolicy')}</span>
             <ChevronRight className="w-5 h-5 text-gray-400" />
           </motion.button>
         </div>
@@ -2953,7 +3200,7 @@ export function HairvanaInterface() {
           onClick={() => setAppState('auth')}
           className="w-full bg-red-100 text-red-700 py-3 rounded-xl font-medium"
         >
-          Logout
+          {t('logout')}
         </motion.button>
       </div>
     </motion.div>
@@ -3261,23 +3508,23 @@ export function HairvanaInterface() {
   );
 
     const viewTitles: Record<typeof activeView, string> = {
-    home: 'Hairvana',
-    ar: 'AR Try-On',
-    gallery: 'Style Gallery',
-    booking: 'Book a Stylist',
-    profile: 'My Profile',
-    chat: 'AI Style Coach',
-    evaluation: 'AI Evaluation',
-    bookAppointment: 'Book Appointment',
-    payment: 'Payment',
-    favorites: 'My Favorites',
-    salons: 'Find Salons',
-    paymentDetails: 'Payment Details',
-        history: 'My History',
-    salonDetails: 'Salon Details',
-    styleDetails: 'Style Details',
-    settings: 'Settings',
-    bookingHistory: 'Booking History',
+    home: t('view.home'),
+    ar: t('view.ar'),
+    gallery: t('view.gallery'),
+    booking: t('view.booking'),
+    profile: t('view.profile'),
+    chat: t('view.coach'),
+    evaluation: t('view.evaluation'),
+    bookAppointment: t('view.bookAppointment'),
+    payment: t('view.payment'),
+    favorites: t('view.favorites'),
+    salons: t('view.salons'),
+    paymentDetails: t('view.paymentDetails'),
+        history: t('view.history'),
+    salonDetails: t('view.salonDetails'),
+    styleDetails: t('view.styleDetails'),
+    settings: t('view.settings'),
+    bookingHistory: t('view.bookingHistory'),
   };
 
   const isFullScreenView = ['ar', 'evaluation', 'bookAppointment'].includes(activeView);
@@ -3451,11 +3698,19 @@ export function HairvanaInterface() {
   // --- Booking Rating Modal ---
 
   // Add handler for rating submit
-  const handleRatingSubmit = (data) => {
+  const handleRatingSubmit = (data: { rating: number; review: string; tags: string[] }) => {
     // You can send data to backend or store locally
     // For now, just log it
     console.log('Rating submitted:', data);
   };
+
+  const navItems: { view: string; icon: React.ElementType; label: string }[] = [
+    { view: 'home', icon: Sparkles, label: t('nav.home') as string },
+    { view: 'ar', icon: Camera, label: t('nav.ar') as string },
+    { view: 'gallery', icon: BookOpen, label: t('nav.gallery') as string },
+    { view: 'salons', icon: MapPin, label: t('nav.salons') as string },
+    { view: 'chat', icon: MessageCircle, label: t('nav.coach') as string },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 p-4">
@@ -3488,7 +3743,7 @@ export function HairvanaInterface() {
                     <div>
                       <h1 className="text-xl font-bold">{viewTitles[activeView]}</h1>
                       {activeView === 'home' && (
-                        <p className="text-sm opacity-90">Your personal style companion</p>
+                        <p className="text-sm opacity-90">{t('personalStyleCompanion')}</p>
                       )}
                     </div>
                   </div>
@@ -3544,13 +3799,7 @@ export function HairvanaInterface() {
             {(activeView === 'ar' || !isFullScreenView) && (
               <div className="bg-white border-t border-gray-100 p-4">
                 <div className="flex justify-around">
-                  {[
-                    { view: 'home', icon: Sparkles, label: 'Home' },
-                    { view: 'ar', icon: Camera, label: 'AR' },
-                    { view: 'gallery', icon: BookOpen, label: 'Gallery' },
-                    { view: 'salons', icon: MapPin, label: 'Salons' },
-                    { view: 'chat', icon: MessageCircle, label: 'Coach' },
-                  ].map((nav) => (
+                  {navItems.map((nav) => (
                     <motion.button
                       key={nav.view}
                       whileHover={{ scale: 1.05 }}
