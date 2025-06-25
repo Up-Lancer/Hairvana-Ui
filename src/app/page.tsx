@@ -1014,18 +1014,7 @@ export function HairvanaInterface() {
         </div>
       </div>
 
-      {/* Settings Button */}
-      <div className="pt-4">
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={() => setActiveView('settings')}
-          className="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-medium flex items-center justify-center gap-2"
-        >
-          <span className="text-lg">⚙️</span>
-          Settings
-        </motion.button>
-      </div>
+   
     </motion.div>
   );
 
@@ -1803,7 +1792,21 @@ export function HairvanaInterface() {
           ))}
         </div>
       </div>
+         {/* Settings Button */}
+      <div className="pt-4">
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          onClick={() => setActiveView('settings')}
+          className="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-medium flex items-center justify-center gap-2"
+        >
+          <span className="text-lg">⚙️</span>
+          Settings
+        </motion.button>
+      </div>
     </motion.div>
+
+    
   );
 
     const renderChatView = () => (
@@ -2086,18 +2089,7 @@ export function HairvanaInterface() {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6 p-6"
     >
-      <div className="flex items-center justify-between mb-4">
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setActiveView('home')}
-          className="p-2 bg-gray-100 rounded-full"
-        >
-          <ArrowLeft className="w-5 h-5" />
-        </motion.button>
-        <h2 className="text-2xl font-bold text-center flex-1">Book Your Appointment</h2>
-        <div className="w-9 h-9" /> {/* Spacer for centering */}
-      </div>
+  
 
       <div className="bg-white p-6 rounded-xl shadow-md space-y-4 border border-gray-100">
         <div className="flex items-center gap-3">
