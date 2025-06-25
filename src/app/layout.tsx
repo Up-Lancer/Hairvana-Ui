@@ -23,7 +23,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                var settings = JSON.parse(localStorage.getItem('hairvana-settings')) || {};
+                var lang = settings.language || 'en';
+                var dir = lang === 'ar' ? 'rtl' : 'ltr';
+                document.documentElement.lang = lang;
+                document.documentElement.dir = dir;
+              } catch (e) {
+                document.documentElement.lang = 'en';
+                document.documentElement.dir = 'ltr';
+              }
+            `,
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
