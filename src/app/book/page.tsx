@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Clock, User, Scissors, Palette, Sparkles, ChevronRight, ChevronLeft, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useRouter } from 'next/navigation';
 
 interface Service {
   id: string;
@@ -116,7 +115,6 @@ const timeSlots: TimeSlot[] = [
 ];
 
 export default function BookingPage() {
-  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [selectedStylist, setSelectedStylist] = useState<string>('');
@@ -129,7 +127,7 @@ export default function BookingPage() {
     notes: ''
   });
 
-  const steps = ['Services', 'Stylist', 'Date & Time', 'Details'];
+  const steps = ['Services', 'Stylist', 'Date & Time', 'Details', 'Confirmation'];
 
   const toggleService = (serviceId: string) => {
     setSelectedServices(prev => 
@@ -180,21 +178,16 @@ export default function BookingPage() {
   };
 
   const handleBooking = () => {
-    // Store booking data in localStorage for the rating page
-    const bookingData = {
-      services: selectedServices.map(id => services.find(s => s.id === id)),
-      stylist: stylists.find(s => s.id === selectedStylist),
+    // Here you would typically send the booking data to your backend
+    console.log('Booking data:', {
+      services: selectedServices,
+      stylist: selectedStylist,
       date: selectedDate,
       time: selectedTime,
       customer: customerInfo,
-      totalPrice: getTotalPrice(),
-      totalDuration: getTotalDuration()
-    };
-    
-    localStorage.setItem('bookingData', JSON.stringify(bookingData));
-    
-    // Navigate to rating page
-    router.push('/rating');
+      totalPrice: getTotalPrice()
+    });
+    setCurrentStep(4);
   };
 
   const generateDateOptions = () => {
@@ -517,85 +510,137 @@ export default function BookingPage() {
                     </div>
                   </div>
                 </div>
+              </div>
+            </motion.div>
+          )}
 
-                {/* Booking Summary */}
-                <div className="bg-white rounded-2xl p-6 border border-rose-200 shadow-lg mt-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Booking Summary</h3>
-                  <div className="space-y-3 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Services:</span>
-                      <div className="text-right">
-                        {services
-                          .filter(service => selectedServices.includes(service.id))
-                          .map(service => (
-                            <div key={service.id} className="text-gray-900">{service.name}</div>
-                          ))}
-                      </div>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Stylist:</span>
-                      <span className="text-gray-900">{stylists.find(s => s.id === selectedStylist)?.name}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Date & Time:</span>
-                      <span className="text-gray-900">
-                        {selectedDate && new Date(selectedDate).toLocaleDateString('en-US', { 
-                          month: 'short', 
-                          day: 'numeric' 
-                        })} at {selectedTime}
-                      </span>
-                    </div>
-                    <div className="flex justify-between border-t pt-3">
-                      <span className="font-semibold text-gray-900">Total:</span>
-                      <span className="font-bold text-xl text-gray-900">${getTotalPrice()}</span>
+          {/* Step 4: Confirmation */}
+          {currentStep === 4 && (
+            <motion.div
+              key="confirmation"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="text-center space-y-8"
+            >
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                className="w-20 h-20 bg-gradient-to-r from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto"
+              >
+                <Check className="w-10 h-10 text-white" />
+              </motion.div>
+
+              <div>
+                <h2 className="text-3xl font-bold text-gray-900 mb-2">Booking Confirmed!</h2>
+                <p className="text-gray-600">Your appointment has been successfully booked</p>
+              </div>
+
+              <div className="max-w-2xl mx-auto bg-white rounded-2xl p-8 border border-rose-200 shadow-lg">
+                <h3 className="text-xl font-semibold text-gray-900 mb-6">Appointment Details</h3>
+                
+                <div className="space-y-4 text-left">
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-gray-600">Services:</span>
+                    <div className="text-right">
+                      {services
+                        .filter(service => selectedServices.includes(service.id))
+                        .map(service => (
+                          <div key={service.id} className="text-gray-900">{service.name}</div>
+                        ))}
                     </div>
                   </div>
+                  
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-gray-600">Stylist:</span>
+                    <span className="text-gray-900 font-medium">
+                      {stylists.find(s => s.id === selectedStylist)?.name}
+                    </span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-gray-600">Date & Time:</span>
+                    <span className="text-gray-900 font-medium">
+                      {new Date(selectedDate).toLocaleDateString('en-US', { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                      })} at {selectedTime}
+                    </span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-gray-600">Duration:</span>
+                    <span className="text-gray-900 font-medium">{getTotalDuration()}</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center py-2">
+                    <span className="text-gray-600">Total Price:</span>
+                    <span className="text-2xl font-bold text-gray-900">${getTotalPrice()}</span>
+                  </div>
                 </div>
+              </div>
+
+              <div className="space-y-4">
+                <p className="text-gray-600">
+                  A confirmation email has been sent to {customerInfo.email}
+                </p>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-gradient-to-r from-rose-500 to-purple-500 text-white px-8 py-3 rounded-xl font-medium hover:shadow-lg transition-all duration-300"
+                  onClick={() => window.location.href = '/rating'}
+                >
+                  Rate Your Experience
+                </motion.button>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between items-center mt-12">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={cn(
-              "flex items-center px-6 py-3 rounded-xl font-medium transition-all duration-300",
-              currentStep === 0
-                ? "text-gray-400 cursor-not-allowed"
-                : "text-gray-700 hover:bg-gray-100"
-            )}
-            onClick={() => currentStep > 0 && setCurrentStep(prev => prev - 1)}
-            disabled={currentStep === 0}
-          >
-            <ChevronLeft className="w-4 h-4 mr-2" />
-            Previous
-          </motion.button>
+        {currentStep < 4 && (
+          <div className="flex justify-between items-center mt-12">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={cn(
+                "flex items-center px-6 py-3 rounded-xl font-medium transition-all duration-300",
+                currentStep === 0
+                  ? "text-gray-400 cursor-not-allowed"
+                  : "text-gray-700 hover:bg-gray-100"
+              )}
+              onClick={() => currentStep > 0 && setCurrentStep(prev => prev - 1)}
+              disabled={currentStep === 0}
+            >
+              <ChevronLeft className="w-4 h-4 mr-2" />
+              Previous
+            </motion.button>
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={cn(
-              "flex items-center px-8 py-3 rounded-xl font-medium transition-all duration-300",
-              canProceedToNext()
-                ? "bg-gradient-to-r from-rose-500 to-purple-500 text-white hover:shadow-lg"
-                : "bg-gray-200 text-gray-400 cursor-not-allowed"
-            )}
-            onClick={() => {
-              if (currentStep === 3) {
-                handleBooking();
-              } else if (canProceedToNext()) {
-                setCurrentStep(prev => prev + 1);
-              }
-            }}
-            disabled={!canProceedToNext()}
-          >
-            {currentStep === 3 ? 'Confirm Booking' : 'Next'}
-            <ChevronRight className="w-4 h-4 ml-2" />
-          </motion.button>
-        </div>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={cn(
+                "flex items-center px-8 py-3 rounded-xl font-medium transition-all duration-300",
+                canProceedToNext()
+                  ? "bg-gradient-to-r from-rose-500 to-purple-500 text-white hover:shadow-lg"
+                  : "bg-gray-200 text-gray-400 cursor-not-allowed"
+              )}
+              onClick={() => {
+                if (currentStep === 3) {
+                  handleBooking();
+                } else if (canProceedToNext()) {
+                  setCurrentStep(prev => prev + 1);
+                }
+              }}
+              disabled={!canProceedToNext()}
+            >
+              {currentStep === 3 ? 'Confirm Booking' : 'Next'}
+              <ChevronRight className="w-4 h-4 ml-2" />
+            </motion.button>
+          </div>
+        )}
       </div>
     </div>
   );
