@@ -1,12 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, Camera, MessageCircle, ArrowRight, Star, BookOpen } from 'lucide-react';
+import HairstyleCard from '../cards/HairstyleCard';
 
 interface HomeViewProps {
   t: (key: string) => string;
   defaultHairstyles: any[];
   styleSuggestions: any[];
-  setActiveView: (view: string) => void;
+  setActiveView: (view: 'home' | 'ar' | 'gallery' | 'booking' | 'profile' | 'chat' | 'evaluation' | 'bookAppointment' | 'payment' | 'favorites' | 'salons' | 'paymentDetails' | 'history' | 'salonDetails' | 'styleDetails' | 'settings' | 'bookingHistory') => void;
   setSelectedStyle: (style: any) => void;
   cnFallback: (...classes: (string | undefined | null | false)[]) => string;
 }
@@ -133,34 +134,12 @@ const HomeView: React.FC<HomeViewProps> = ({
         </div>
         <div className="grid grid-cols-2 gap-4">
           {defaultHairstyles.slice(0, 2).map((style) => (
-            <motion.div
+            <HairstyleCard
               key={style.id}
-              variants={itemVariants}
-              whileHover={{ scale: 1.02 }}
-              className="relative bg-white rounded-xl shadow-md overflow-hidden cursor-pointer"
+              style={style}
               onClick={() => setSelectedStyle(style)}
-            >
-              <img
-                src={style.image}
-                alt={style.name}
-                className="w-full h-32 object-cover"
-              />
-              <div className="p-3">
-                <div className="flex items-center justify-between mb-1">
-                  <h3 className="font-medium text-sm">{style.name}</h3>
-                  <div className="flex items-center gap-1">
-                    <Star className="w-3 h-3 text-yellow-500 fill-current" />
-                    <span className="text-xs text-purple-600 font-medium">{style.aiMatch}%</span>
-                  </div>
-                </div>
-                <p className="text-xs text-gray-500">{style.category}</p>
-              </div>
-              {style.trending && (
-                <div className="absolute top-2 left-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-xs px-2 py-1 rounded-full">
-                  {t('trending')}
-                </div>
-              )}
-            </motion.div>
+              t={t}
+            />
           ))}
         </div>
       </motion.div>
