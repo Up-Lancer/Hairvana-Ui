@@ -51,6 +51,10 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useDropzone } from 'react-dropzone';
+import HomeView from '../components/views/HomeView';
+import SalonFinderView from '../components/views/SalonFinderView';
+import GalleryView from '../components/views/GalleryView';
+import ProfileView from '../components/views/ProfileView';
 
 // Utility function for cn
 function cnUtil(...classes: (string | undefined | null | false)[]): string {
@@ -1053,189 +1057,6 @@ export function HairvanaInterface() {
     }, 1500);
   };
 
-  const renderSalonFinderView = () => (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="space-y-6"
-    >
-      {/* View Toggle */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Find Salons</h2>
-        <div className="flex bg-gray-100 rounded-lg p-1">
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => setSalonViewMode('list')}
-            className={cnFallback(
-              "px-3 py-1 rounded-md text-sm font-medium transition-colors",
-              salonViewMode === 'list' 
-                ? "bg-white text-purple-600 shadow-sm" 
-                : "text-gray-600"
-            )}
-          >
-            List View
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => setSalonViewMode('map')}
-            className={cnFallback(
-              "px-3 py-1 rounded-md text-sm font-medium transition-colors",
-              salonViewMode === 'map' 
-                ? "bg-white text-purple-600 shadow-sm" 
-                : "text-gray-600"
-            )}
-          >
-            Map View
-          </motion.button>
-        </div>
-      </div>
-
-      {/* Map View */}
-      {salonViewMode === 'map' && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="bg-gray-200 rounded-xl h-64 flex items-center justify-center relative overflow-hidden"
-        >
-          {/* Simulated Map Background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-green-100"></div>
-          <div className="relative z-10 text-center space-y-2">
-            <MapPin className="w-8 h-8 text-purple-600 mx-auto" />
-            <p className="text-gray-600 font-medium">Interactive Map View</p>
-            <p className="text-sm text-gray-500">Showing {defaultSalons.length} salons nearby</p>
-          </div>
-          
-          {/* Simulated Map Pins */}
-          <div className="absolute top-16 left-12 w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold animate-bounce">
-            1
-          </div>
-          <div className="absolute top-24 right-16 w-6 h-6 bg-pink-500 rounded-full flex items-center justify-center text-white text-xs font-bold animate-bounce" style={{ animationDelay: '0.2s' }}>
-            2
-          </div>
-          <div className="absolute bottom-20 left-20 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold animate-bounce" style={{ animationDelay: '0.4s' }}>
-            3
-          </div>
-          <div className="absolute bottom-16 right-12 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold animate-bounce" style={{ animationDelay: '0.6s' }}>
-            4
-          </div>
-        </motion.div>
-      )}
-
-      {/* Salon List */}
-      <div className="space-y-4">
-        {defaultSalons.map((salon, index) => (
-          <motion.div
-            key={salon.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            whileHover={{ scale: 1.01 }}
-            className="bg-white p-4 rounded-xl shadow-md border border-gray-100"
-          >
-            <div className="flex gap-4">
-              <img
-                src={salon.image}
-                alt={salon.name}
-                className="w-20 h-20 rounded-lg object-cover"
-              />
-              <div className="flex-1 space-y-2">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="font-semibold text-lg">{salon.name}</h3>
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <MapPin className="w-4 h-4" />
-                      <span>{salon.distance}</span>
-                      <span className="text-gray-400">•</span>
-                      <span>{salon.priceRange}</span>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="flex items-center gap-1">
-                      <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                      <span className="font-medium">{salon.rating}</span>
-                    </div>
-                    <div className="text-sm text-gray-500">{salon.reviewCount} reviews</div>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap gap-1">
-                  {salon.services.slice(0, 3).map((service) => (
-                    <span
-                      key={service}
-                      className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full"
-                    >
-                      {service}
-                    </span>
-                  ))}
-                  {salon.services.length > 3 && (
-                    <span className="text-xs text-gray-500 px-2 py-1">
-                      +{salon.services.length - 3} more
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="text-sm text-gray-600">
-                    <Clock className="w-4 h-4 inline mr-1" />
-                    {salon.openHours}
-                  </div>
-                  <div className="flex gap-2">
-                                        <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="text-sm bg-gray-100 text-gray-700 px-3 py-1 rounded-lg font-medium"
-                      onClick={() => {
-                        setSelectedSalonForDetails(salon);
-                        setActiveView('salonDetails');
-                      }}
-                    >
-                      View Services
-                    </motion.button>
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => {
-                        setSelectedSalon(salon);
-                        setSelectedAppointmentStylist(defaultStylists[0]); // Default stylist for this salon
-                        setSelectedAppointmentStyle(selectedStyle || defaultHairstyles[0]); // Current AR style or default
-                        setActiveView('bookAppointment');
-                      }}
-                      className="text-sm bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1 rounded-lg font-medium"
-                    >
-                      Book
-                    </motion.button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Quick Filters */}
-      <div className="space-y-3">
-        <h3 className="font-semibold">Quick Filters</h3>
-        <div className="flex flex-wrap gap-2">
-          {['Nearby', 'Highly Rated', 'Open Now', 'Budget Friendly', 'Luxury'].map((filter) => (
-            <motion.button
-              key={filter}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="text-sm bg-purple-100 text-purple-700 px-3 py-2 rounded-full font-medium"
-              onClick={() => setActiveView('salons')} // Example: Apply filter and refresh list
-            >
-              {filter}
-            </motion.button>
-                    ))}
-        </div>
-      </div>
-
-   
-    </motion.div>
-  );
-
   const handleBookStylist = (stylist: StylistProfile) => {
     setStylist(stylist);
     setSelectedAppointmentStylist(stylist);
@@ -1460,130 +1281,16 @@ export function HairvanaInterface() {
   };
 
   // Home View
-  const renderHomeView = () => {
-    return (
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-8"
-      >
-        {/* Hero Section */}
-        <motion.div variants={itemVariants} className="text-center space-y-4">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Sparkles className="w-8 h-8 text-purple-500" />
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
-              Hairvana
-            </h1>
-          </div>
-          <p className="text-lg text-gray-600 max-w-md mx-auto">
-            Discover your perfect hairstyle with AI-powered recommendations and AR try-on
-          </p>
-        </motion.div>
-
-        {/* Quick Actions */}
-        <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4">
-          <motion.button
-            whileHover={{ scale: 1.02, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => setActiveView('ar')}
-            className="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-6 rounded-2xl shadow-lg"
-          >
-            <Camera className="w-8 h-8 mx-auto mb-2" />
-            <h3 className="font-semibold">AR Try-On</h3>
-            <p className="text-sm opacity-90">See styles on you</p>
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.02, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => setActiveView('chat')}
-            className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-6 rounded-2xl shadow-lg"
-          >
-            <MessageCircle className="w-8 h-8 mx-auto mb-2" />
-            <h3 className="font-semibold">AI Coach</h3>
-            <p className="text-sm opacity-90">Get personalized advice</p>
-          </motion.button>
-        </motion.div>
-
-        {/* AI Suggestions */}
-        <motion.div variants={itemVariants} className="space-y-4">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-purple-500" />
-            <h2 className="text-xl font-semibold">AI Suggestions for You</h2>
-          </div>
-          <div className="grid grid-cols-1 gap-3">
-            {styleSuggestions.slice(0, 2).map((suggestion, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                whileHover={{ scale: 1.01 }}
-                className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-xl border border-purple-100 cursor-pointer"
-                onClick={() => setActiveView('chat')} // Example: Clicking suggestion takes to chat
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
-                    {suggestion.icon}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-medium text-gray-900">{suggestion.label}</h3>
-                    <p className="text-sm text-gray-600">{suggestion.description}</p>
-                  </div>
-                  <ArrowRight className="w-5 h-5 text-purple-500" />
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Trending Styles */}
-        <motion.div variants={itemVariants} className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold">Trending Styles</h2>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              onClick={() => setActiveView('gallery')}
-              className="text-purple-600 text-sm font-medium"
-            >
-              View All
-            </motion.button>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            {defaultHairstyles.slice(0, 2).map((style) => (
-              <motion.div
-                key={style.id}
-                variants={itemVariants}
-                whileHover={{ scale: 1.02 }}
-                className="relative bg-white rounded-xl shadow-md overflow-hidden cursor-pointer"
-                onClick={() => setSelectedStyle(style)}
-              >
-                <img
-                  src={style.image}
-                  alt={style.name}
-                  className="w-full h-32 object-cover"
-                />
-                <div className="p-3">
-                  <div className="flex items-center justify-between mb-1">
-                    <h3 className="font-medium text-sm">{style.name}</h3>
-                    <div className="flex items-center gap-1">
-                      <Star className="w-3 h-3 text-yellow-500 fill-current" />
-                      <span className="text-xs text-purple-600 font-medium">{style.aiMatch}%</span>
-                    </div>
-                  </div>
-                  <p className="text-xs text-gray-500">{style.category}</p>
-                </div>
-                {style.trending && (
-                  <div className="absolute top-2 left-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-xs px-2 py-1 rounded-full">
-                    Trending
-                  </div>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </motion.div>
-    );
-  };
+  const renderHomeView = () => (
+    <HomeView
+      t={t}
+      defaultHairstyles={defaultHairstyles}
+      styleSuggestions={styleSuggestions}
+      setActiveView={(view: typeof activeView) => setActiveView(view)}
+      setSelectedStyle={setSelectedStyle}
+      cnFallback={cnFallback}
+    />
+  );
 
     // AR Try-On View
   const renderARView = () => (
@@ -1741,125 +1448,6 @@ export function HairvanaInterface() {
     </motion.div>
   );
 
-    const renderGalleryView = () => (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="space-y-6"
-    >
-      {/* Gallery Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Style Gallery</h2>
-        <div className="flex gap-2">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => alert('Search functionality coming soon!')}
-            className="p-2 bg-gray-100 rounded-lg"
-          >
-            <Search className="w-5 h-5" />
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => alert('Filter functionality coming soon!')}
-            className="p-2 bg-gray-100 rounded-lg"
-          >
-            <Filter className="w-5 h-5" />
-          </motion.button>
-        </div>
-      </div>
-
-      {/* Style Grid */}
-      <div className="grid grid-cols-2 gap-4">
-        {defaultHairstyles.map((style) => (
-          <motion.div
-            key={style.id}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            whileHover={{ scale: 1.02 }}
-            className="relative bg-white rounded-xl shadow-md overflow-hidden cursor-pointer"
-          >
-            <img
-              src={style.image}
-              alt={style.name}
-              className="w-full h-40 object-cover"
-            />
-            <div className="p-4">
-                            <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <h3 className="font-semibold">{style.name}</h3>
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => {
-                      handleAddToFavorites(style);
-                      setActiveView('favorites');
-                    }}
-                    className={cnFallback(
-                      "p-1 rounded-full",
-                      isStyleFavorited(style.id) ? "text-red-500" : "text-gray-400"
-                    )}
-                  >
-                    <Heart className={cnFallback(
-                      "w-4 h-4",
-                      isStyleFavorited(style.id) ? "fill-current" : ""
-                    )} />
-                  </motion.button>
-                </div>
-              </div>
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-500">{style.category}</span>
-                <div className="flex items-center gap-1">
-                  <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                  <span className="text-purple-600 font-medium">{style.aiMatch}%</span>
-                </div>
-              </div>
-                            <div className="flex gap-2 mt-3">
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => {
-                    setSelectedStyle(style);
-                    setActiveView('ar');
-                  }}
-                  className="flex-1 bg-purple-100 text-purple-700 py-2 rounded-lg text-sm font-medium"
-                >
-                  Try AR
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => {
-                    setSelectedAppointmentStyle(style);
-                    setSelectedSalon(defaultSalons[0]);
-                    setSelectedAppointmentStylist(defaultStylists[0]);
-                    setActiveView('bookAppointment');
-                  }}
-                  className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 rounded-lg text-sm font-medium"
-                >
-                  Book
-                </motion.button>
-              </div>
-            </div>
-            {style.trending && (
-              <div className="absolute top-3 left-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-xs px-2 py-1 rounded-full">
-                🔥 Trending
-              </div>
-            )}
-            <div className={cnFallback(
-              "absolute top-3 right-3 text-white text-xs px-2 py-1 rounded-full",
-              style.difficulty === 'Easy' ? 'bg-green-500' :
-              style.difficulty === 'Medium' ? 'bg-yellow-500' : 'bg-red-500'
-            )}>
-              {style.difficulty}
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </motion.div>
-  );
-
     const renderBookingView = () => (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -1930,108 +1518,6 @@ export function HairvanaInterface() {
         ))}
       </div>
     </motion.div>
-  );
-
-    const renderProfileView = () => (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="space-y-6"
-    >
-      {/* Profile Header */}
-      <div className="text-center space-y-4">
-        <div className="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold">
-          A
-        </div>
-        <div>
-          <h2 className="text-2xl font-bold">Alex Johnson</h2>
-          <p className="text-gray-600">Hair enthusiast since 2023</p>
-        </div>
-      </div>
-
-            {/* Stats */}
-      <div className="grid grid-cols-3 gap-4">
-        <div className="text-center p-4 bg-purple-50 rounded-xl">
-          <div className="text-2xl font-bold text-purple-600">12</div>
-          <div className="text-sm text-gray-600">Styles Tried</div>
-        </div>
-        <div className="text-center p-4 bg-pink-50 rounded-xl">
-          <div className="text-2xl font-bold text-pink-600">5</div>
-          <div className="text-sm text-gray-600">Salon Visits</div>
-        </div>
-        <div className="text-center p-4 bg-blue-50 rounded-xl">
-          <div className="text-2xl font-bold text-blue-600">{favoriteStyles.length}</div>
-          <div className="text-sm text-gray-600">Saved Looks</div>
-        </div>
-      </div>
-
-      {/* Quick Actions */}
-      <div className="grid grid-cols-2 gap-4">
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={() => setActiveView('favorites')}
-          className="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-xl shadow-lg"
-        >
-          <Heart className="w-6 h-6 mx-auto mb-2" />
-          <h3 className="font-semibold">Favorites</h3>
-          <p className="text-sm opacity-90">{favoriteStyles.length} saved styles</p>
-        </motion.button>
-        
-                <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={() => setActiveView('bookingHistory')} // Nav to booking history screen
-          className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-4 rounded-xl shadow-lg"
-        >
-          <Calendar className="w-6 h-6 mx-auto mb-2" />
-          <h3 className="font-semibold">Bookings</h3>
-          <p className="text-sm opacity-90">Your appointments</p>
-        </motion.button>
-      </div>
-
-      {/* Recent Activity */}
-      <div className="space-y-4">
-        <h3 className="font-semibold">Recent Activity</h3>
-        <div className="space-y-3">
-          {[
-            { action: "Tried AR with Curtain Bangs", time: "2 hours ago", icon: Camera },
-            { action: "Saved Beach Waves style", time: "1 day ago", icon: Heart },
-            { action: "Booked appointment with Sarah", time: "3 days ago", icon: Calendar },
-          ].map((activity, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl"
-            >
-              <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
-                <activity.icon className="w-4 h-4 text-purple-600" />
-              </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium">{activity.action}</p>
-                <p className="text-xs text-gray-500">{activity.time}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-         {/* Settings Button */}
-      <div className="pt-4">
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={() => setActiveView('settings')}
-          className="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-medium flex items-center justify-center gap-2"
-        >
-          <span className="text-lg">⚙️</span>
-          Settings
-        </motion.button>
-      </div>
-    </motion.div>
-
-    
   );
 
     const renderChatView = () => (
@@ -3775,12 +3261,47 @@ export function HairvanaInterface() {
                   {{
                     home: renderHomeView,
                     ar: renderARView,
-                    gallery: renderGalleryView,
+                    gallery: () => (
+                      <GalleryView
+                        t={t}
+                        defaultHairstyles={defaultHairstyles}
+                        handleAddToFavorites={handleAddToFavorites}
+                        setActiveView={(view: typeof activeView) => setActiveView(view)}
+                        setSelectedStyle={setSelectedStyle}
+                        setSelectedAppointmentStyle={setSelectedAppointmentStyle}
+                        defaultSalons={defaultSalons}
+                        cnFallback={cnFallback}
+                        isStyleFavorited={isStyleFavorited}
+                      />
+                    ),
                     booking: renderBookingView,
                     chat: renderChatView,
-                    profile: renderProfileView,
+                    profile: () => (
+                      <ProfileView
+                        t={t}
+                        favoriteStyles={favoriteStyles}
+                        setActiveView={(view: typeof activeView) => setActiveView(view)}
+                        cnFallback={cnFallback}
+                      />
+                    ),
                     evaluation: renderEvaluationView,
-                    salons: renderSalonFinderView,
+                    salons: () => (
+                      <SalonFinderView
+                        t={t}
+                        defaultSalons={defaultSalons}
+                        defaultStylists={defaultStylists}
+                        setActiveView={(view: typeof activeView) => setActiveView(view)}
+                        setSelectedSalon={setSelectedSalon}
+                        setSelectedSalonForDetails={setSelectedSalonForDetails}
+                        setSelectedAppointmentStylist={setSelectedAppointmentStylist}
+                        setSelectedAppointmentStyle={setSelectedAppointmentStyle}
+                        selectedStyle={selectedStyle}
+                        defaultHairstyles={defaultHairstyles}
+                        salonViewMode={salonViewMode}
+                        setSalonViewMode={(mode: 'list' | 'map') => setSalonViewMode(mode)}
+                        cnFallback={cnFallback}
+                      />
+                    ),
                     favorites: renderFavoritesView,
                                         bookAppointment: renderBookAppointmentView,
                     payment: renderPaymentView,
